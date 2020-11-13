@@ -1,0 +1,8 @@
+#!/bin/bash
+
+new_args=
+while (("$#")); do
+  new_args="${new_args} \"${1}\""
+  shift
+done
+echo $new_args

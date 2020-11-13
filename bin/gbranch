@@ -1,0 +1,8 @@
+#!/bin/bash
+_gbranch() {
+  branch=$(git symbolic-ref HEAD 2>/dev/null)
+  branch=${branch##refs/heads/}
+  echo "$branch"
+}
+
+_gbranch

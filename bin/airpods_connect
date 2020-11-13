@@ -1,0 +1,2 @@
+#!/bin/bash
+for i in {1..10}; do bluetoothctl connect 38:EC:0D:8D:D5:F5; if [[ "$?" -eq 0 ]]; then break; fi; sleep 0.2; done

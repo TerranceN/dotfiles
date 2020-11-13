@@ -1,0 +1,11 @@
+#!/bin/bash
+bold=$(tput bold)
+normal=$(tput sgr0)
+red=$(tput setaf 1)
+white=$(tput setaf 7)
+read -p "Are you sure you want to ${bold}${red}FORCE${white}${normal} push ${bold}$(gbranch)${normal}? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  git push -f $@
+fi
