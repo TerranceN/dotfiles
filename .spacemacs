@@ -343,6 +343,9 @@ you should place your code here."
   (define-key evil-motion-state-map "k" nil)
   (define-key evil-motion-state-map "l" nil)
 
+  ;; Make $ not select the newline as well (makes it the same as g_ but is easier to type)
+  (define-key evil-visual-state-map (kbd "$") 'evil-last-non-blank)
+
   ;; equivalents to FileFind and FileGrep
   (define-key evil-normal-state-map (kbd "^p") 'helm-projectile-ag)
   (define-key evil-normal-state-map (kbd "^o") 'helm-projectile-find-file)
@@ -363,7 +366,10 @@ you should place your code here."
 
   ;; Dont use system clipboard when highlighting things
   (setq x-select-enable-clipboard nil)
-  (setq company-dabbrev-char-regexp "\\sw[a-zA-Z0-9-]?+")
+  (setq company-dabbrev-char-regexp "\\sw[a-zA-Z0-9_]?+")
+  ;(setq company-dabbrev-char-regexp "\\sw[a-zA-Z0-9-]?+")
+
+  (setq c-default-style "k&r")
 
   ;(require 'sublimity-scroll)
   ;(require 'sublimity-map)
