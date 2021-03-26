@@ -1,2 +1,2 @@
 #!/bin/bash
-git branch --sort=-committerdate
+git co $(git branch --sort=-committerdate | fzf | sed -e 's/^[ \t*]*//')

@@ -71,13 +71,26 @@ augroup END
 "" Shortcut for :
 nnoremap <silent> <leader><leader> :
 
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case --hidden -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
 "" FileFind and FileGrep
 nnoremap <silent> <leader>f :Files<CR>
-nnoremap <silent> <leader>g :Rg<CR>
+nnoremap <silent> <leader>g :RG<CR>
 
 "" Buffer switching
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader><Tab> :b#<CR>
+
+"" Explore shortcut
+nnoremap <silent> <leader>e :Ex<CR>
 
 "" Select most recently pasted block (useful for pasting and then copying that thing again)
 nnoremap gp `[v`]
