@@ -1,0 +1,9 @@
+[user]
+	email = TNiechciol@gmail.com
+	name = Terrance Niechciol
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
