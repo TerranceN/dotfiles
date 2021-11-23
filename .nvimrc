@@ -105,6 +105,23 @@ nnoremap gp `[v`]
 "" Hotkey for toggling undo-tree
 nnoremap <silent> <leader>u :UndotreeToggle<CR><C-w><left>
 
+nnoremap <silent> <leader>l :Git blame<CR>
+
+function! GitOpenLinkLine()
+  let cursor_line = getpos('.')[1]
+  let url = system("git getlink origin " . expand('%:p') . " " . cursor_line)
+  let @+ = url
+endfunction
+nnoremap <silent> <leader>c :call GitOpenLinkLine()<CR>
+
+function! GitOpenLinkBlock()
+  let line_start = getpos("'<")[1]
+  let line_end = getpos("'>")[1]
+  let url = system("git getlink origin " . expand('%:p') . " " . line_start . " " . line_end)
+  let @+ = url
+endfunction
+vnoremap <silent> <leader>c :call GitOpenLinkBlock()<CR>
+
 "" Save persistent undo files
 silent !mkdir ~/.vim/undodir > /dev/null 2>&1
 set undodir=~/.vim/undodir
