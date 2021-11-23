@@ -1,0 +1,28 @@
+#!/bin/bash
+
+usage() { echo "Usage: git getlink <remote> <file> [<lineNo> [<endingLineNo>]]"; exit 1; }
+
+remote=$1
+file=$2
+lineNo=$3
+endingLineNo=$4
+
+remoteUrl=$(git remote get-url ${remote})
+gitHash=$(git rev-parse HEAD)
+gitFileRelative=$(git ls-files --full-name $file)
+
+if [[ $remoteUrl == git@* ]]; then
+  webUrl=$(echo $remoteUrl | sed 's/git@\([^:]*\):\(.*\).git/https:\/\/\1\/\2/')
+elif [[ $remoteUrl == https://* ]]; then
+  webUrl=$(echo $remoteUrl | sed 's/\(.*\).git/\1/')
+fi
+
+if [[ -z $lineNo ]]; then
+  lineNoStr=""
+elif [[ -z $endingLineNo ]]; then
+  lineNoStr="#L${lineNo}"
+else
+  lineNoStr="#L${lineNo}-L${endingLineNo}"
+fi
+
+echo "${webUrl}/tree/${gitHash}/${gitFileRelative}${lineNoStr}"
