@@ -43,6 +43,13 @@ set rnu
 "" Highlight the current line
 set cursorline
 
+"" Case insensitive by default unless you use a capital in the search string
+"" Override with "\C" in the search
+set ignorecase
+set smartcase
+
+set scrolloff=8
+
 "" GitGutter colors aren't set by wombat256mod, so set them manually
 highlight SignColumn guibg=#242424 ctermbg=234
 highlight GitGutterAdd    guifg=#95e454 ctermfg=113
