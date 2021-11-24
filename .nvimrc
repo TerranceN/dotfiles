@@ -128,7 +128,6 @@ set undodir=~/.vim/undodir
 set undofile
 
 "" Let coc.vim know where to find node
-let g:coc_node_path = '~/.nvm/versions/node/v14.15.1/bin/node'
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <right> pumvisible() ? coc#_select_confirm() : "\<right>"
 
