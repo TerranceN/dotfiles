@@ -12,11 +12,15 @@ set PATH $PATH "$HOME/.npm/bin"
 
 bind \cd delete-char
 
+if type -q fzf_key_bindings
+	fzf_key_bindings
+end
+
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias v=nvim
-alias asdf=fzf-history-widget
 alias tf=terraform
 alias f=fzf-history-widget
+alias g=git
 alias b='git brs'
 
 set EDITOR nvim
