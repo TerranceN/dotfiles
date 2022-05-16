@@ -7,3 +7,6 @@
 	br = branch
 	ci = commit
 	st = status
+
+[merge]
+	conflictStyle = diff3

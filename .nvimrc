@@ -8,6 +8,7 @@ Plug 'tpope/vim-sensible'
 Plug 'micha/wombat256'
 Plug 'tpope/vim-surround'
 Plug 'roryokane/detectindent'
+Plug 'justinmk/vim-sneak'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -20,6 +21,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mbbill/undotree'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
 
 call plug#end()
 
@@ -75,8 +78,7 @@ augroup DetectIndent
    autocmd BufReadPost *  DetectIndent
 augroup END
 
-"" Shortcut for :
-nnoremap <silent> <leader><leader> :
+let g:sneak#use_ic_sns = 1
 
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case --hidden -- %s || true'
@@ -90,14 +92,29 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 "" FileFind and FileGrep
 nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader><leader>f :Files<CR><C-p>
 nnoremap <silent> <leader>g :RG<CR>
+nnoremap <silent> <leader><leader>g :RG<CR><C-p>
 
 "" Buffer switching
 nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader><leader>b :Buffers<CR><C-p>
 nnoremap <silent> <leader><Tab> :b#<CR>
+
+"" Coc commands
+nnoremap <silent> <leader>d :call CocAction("jumpDefinition")<CR>
+nnoremap <silent> <leader>r :call CocAction("jumpReferences")<CR>
+
+inoremap <expr><C-Down> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Down>"
+nnoremap <expr><C-Down> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Down>"
+inoremap <expr><C-Up> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Up>"
+nnoremap <expr><C-Up> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Up>"
 
 "" Explore shortcut
 nnoremap <silent> <leader>e :Ex<CR>
+
+"" Disable highlight after search
+nnoremap <silent> // :nohl<CR>
 
 "" Select most recently pasted block (useful for pasting and then copying that thing again)
 nnoremap gp `[v`]
@@ -133,9 +150,7 @@ inoremap <silent><expr> <right> pumvisible() ? coc#_select_confirm() : "\<right>
 
 function! s:show_documentation()
   if (exists("g:coc_status") && coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    call CocActionAsync('definitionHover')
   endif
 endfunction
 
