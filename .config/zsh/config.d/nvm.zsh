@@ -1,4 +1,4 @@
-if [ -f $HOME/.nvm/nvm.sh ]; then
-	source $HOME/.nvm/nvm.sh --no-use ';' nvm $argv
-	export PATH="$PATH:$HOME/.nvm/versions/node/v16.14.0/bin/"
+if [ -f $NVM_DIR/nvm.sh ]; then
+	source $NVM_DIR/nvm.sh --no-use ';' nvm $argv
+	export PATH="$PATH:$NVM_DIR/versions/node/v16.14.0/bin/"
 fi
