@@ -149,7 +149,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <right> pumvisible() ? coc#_select_confirm() : "\<right>"
 
 function! s:show_documentation()
-  if (exists("g:coc_status") && coc#rpc#ready())
+  if (exists("g:coc_status") && coc#rpc#ready() && !coc#float#has_float())
     call CocActionAsync('definitionHover')
   endif
 endfunction
