@@ -1,6 +1,7 @@
 let mapleader =" "
 
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+let g:fzf_history_dir = '~/.config/nvim/fzf-history'
 
 call plug#begin('~/.config/nvim/plugged')
 
@@ -23,6 +24,8 @@ Plug 'mbbill/undotree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
+
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
