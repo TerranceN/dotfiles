@@ -1,0 +1,7 @@
+evaluate-commands %sh{
+  echo "evaluate-commands %{"
+  for file in $(find ~/.config/kak/kakrc.d/ ! -type d | sort); do
+    echo "source ${file}"
+  done
+  echo "}"
+}
