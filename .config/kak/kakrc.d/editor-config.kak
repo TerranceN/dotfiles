@@ -26,5 +26,6 @@ map -docstring "buffer top"    global goto <up> k
 map -docstring "line end"      global goto <right> l
 
 map -docstring "yank to system clipboard" global user y <a-|>wl-copy<ret>
-
 map -docstring "last buffer" global user <tab> ga
+map -docstring "comment line" global user / ":comment-line<ret>"
+map -docstring "comment block" global user ? ":comment-block<ret>"

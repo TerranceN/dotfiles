@@ -34,7 +34,6 @@ define-command fzf-buffer-open %{
 }
 
 plug "andreyorst/fzf.kak" config %{
-  map global normal <c-p> ': fzf-mode<ret>'
   map global user f ':fzf-file-with-hist<ret>'
   map global user F ':fzf-file-with-hist prefill<ret>'
   map global user g ':fzf-grep-with-hist<ret>'

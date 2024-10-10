@@ -1,6 +1,9 @@
 map -docstring "git blame"      global user l ":git blame<ret>"
 map -docstring "git blame-jump" global user L ":git blame-jump<ret>"
 
+map -docstring "git next-hunk" global normal <c-n> ":git next-hunk<ret>"
+map -docstring "git prev-hunk" global normal <c-a-n> ":git prev-hunk<ret>"
+
 # enable flag-lines hl for git diff
 hook global WinCreate .* %{
     add-highlighter window/git-diff flag-lines Default git_diff_flags
