@@ -19,3 +19,12 @@ hook global BufOpenFile .* %{
         fi
     }
 }
+
+define-command git-getlink %{
+  nop %sh{
+    lines=$(echo "${kak_selection_desc}" | sed 's/^\(.*\)\.\(.*\),\(.*\)\.\(.*\)/\1 \3/')
+    git-getlink origin ${kak_buffile} $lines | wl-copy --trim-newline 2>/dev/null
+  }
+}
+
+map -docstring "copy link to code on remote" global user c :git-getlink<ret>
