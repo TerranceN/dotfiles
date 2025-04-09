@@ -18,7 +18,7 @@ if [ -f /usr/share/fzf/key-bindings.zsh ]; then
   export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 
   fzf_fn() {
-    print -z "$(history | fzf --tac --tiebreak=index | awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}')" 
+    print -z "$(history | fzf --tac --tiebreak=index | sed 's/\\/\\\\/g' | awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}')"
   }
 
   setopt histignorealldups

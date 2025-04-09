@@ -2,6 +2,8 @@ if [ -f /usr/share/skim/key-bindings.zsh ]; then
   source /usr/share/skim/key-bindings.zsh
   # source /usr/share/skim/completion.zsh
 
+  export SKIM_DEFAULT_COMMAND="fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
+
   if [ $(command -v zvm_define_widget) ]; then
     skim-history-widget-then-ins() {
       zle history-search-forwards
@@ -18,7 +20,7 @@ if [ -f /usr/share/skim/key-bindings.zsh ]; then
   export SKIM_DEFAULT_OPTIONS="--history=$HOME/.skim_history"
 
   skim_fn() {
-    print -z "$(history | sk --tac --no-sort --exact | awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}')"
+    print -z "$(history | sk --tac --no-sort --exact | sed 's/\\/\\\\/g' | awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}')"
   }
 
   setopt histignorealldups
