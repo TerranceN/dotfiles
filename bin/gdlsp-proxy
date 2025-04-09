@@ -1,0 +1,33 @@
+#!/bin/sh
+
+respond() {
+  local length=$(printf "%s" "$1" | wc -c)
+
+  echo -en "Content-Length: $length\r\n\r\n"
+  echo -En "$1"
+}
+
+process() {
+  while IFS= read -r line; do
+    # Capture the content-length header value
+    [[ "$line" =~ ^Content-Length:\ ([0-9]+) ]]
+    length="${BASH_REMATCH[1]}"
+
+    # Read the message based on the Content-Length value
+    json_payload=$(head -c "$((length + 2))" | tail -c +3)
+    # echo -En "$json_payload" >> dbg_json
+    local length2=$(printf "%s" "$json_payload" | wc -c)
+    json_payload=$(echo -En "$json_payload" | jq -c 'if (.result|type)=="array" then (.result |= map(select(.insertText != null).insertText |= sub("(?<fn>[^(])\\(\\)?"; "\(.fn)"))) end')
+    # json_payload=$(echo -En "$json_payload" | jq -c 'if (.result|type)=="array" then (.result |= map(select(.insertText == "" and .label != null) | .insertText = .label )) end')
+    #json_payload=$(echo -En "$json_payload" | sed 's/"insertText":"\([^(]*\)[()]*"/"insertText:":"\1"/g')
+
+    if [ "$length" -ne "$length2" ]; then
+      echo "Length mismatch! $length vs $length2" > ~/gdlsp-debug
+    fi
+
+    respond "$json_payload"
+  done
+}
+
+# nc $@ | tee dbg | process | tee dbg2
+nc $@ | process

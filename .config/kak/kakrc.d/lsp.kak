@@ -1,5 +1,12 @@
 eval %sh{kak-lsp --kakoune --session "$kak_session"}
-hook global WinSetOption filetype=(javascript|typescript) %{
+hook global WinSetOption filetype=(gdscript) %{
+  # set-option buffer lsp_snippet_support false
+  # hook buffer InsertCompletionHide .* %{
+  #   execute-keys "<backspace>"
+  # }
+}
+#hook global WinSetOption filetype=(javascript|typescript|c-sharp|gdscript) %{
+hook global WinSetOption filetype=(typescript|c-sharp|gdscript|terraform) %{
   #set global lsp_debug true
   lsp-enable-window
   lsp-auto-hover-enable
@@ -29,6 +36,37 @@ hook global InsertCompletionHide .* %{
 #       preferences.includeInlayParameterNameHints = "all"
 #   }
 # }
+
+hook global BufSetOption filetype=(?:gdscript) %{
+  set-option buffer lsp_language_id gdscript
+  set-option buffer lsp_servers %{
+    [gdscript]
+      root_globs = [".import", "project.godot"]
+      command = "gdlsp-proxy"
+      # command = "netcat"
+      args = ["localhost", "6005"]
+  }
+}
+
+hook global BufSetOption filetype=(?:c-sharp) %{
+  set-option buffer lsp_language_id c-sharp
+  set-option buffer lsp_servers %{
+    [c-sharp]
+      root_globs = [".sln", ".csproj"]
+      command = "omnisharp"
+      args = ["-lsp"]
+  }
+}
+
+hook global BufSetOption filetype=(?:terraform) %{
+  set-option buffer lsp_language_id terraform
+  set-option buffer lsp_servers %{
+    [terraform]
+      root_globs = [".git"]
+      command = "terraform-ls"
+      args = ["serve"]
+  }
+}
 
 # Recreate these hooks so we can set typescript as just typescript, not typescriptreact
 # Fixes https://github.com/kakoune-lsp/kakoune-lsp/issues/211 (at the cost of two tsservers running)
